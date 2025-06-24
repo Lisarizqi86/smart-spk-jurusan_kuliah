@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPK Pemilihan Jurusan Kuliah - Metode SMART</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .weight-slider {
+            width: 100%;
+            margin: 10px 0;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            outline: none;
+        }
+
+        .weight-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 3px solid #667eea;
+        }
+
+        .weight-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 3px solid #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .rating-section {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .rating-table th, .rating-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .rating-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .rating-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .rating-input {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .rating-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateX(5px);
+        }
+
+        .result-rank {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 20px;
+        }
+
+        .result-name {
+            flex-grow: 1;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .result-score {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #28a745;
+            background: #e8f5e8;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        .criteria-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .criteria-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .criteria-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .criteria-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .weight-display {
+            font-weight: 600;
+            color: #667eea;
+            margin-left: 10px;
+        }
+
+        .total-weight {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .rating-table {
+                font-size: 0.9rem;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Sistem Pendukung Keputusan</h1>
+            <p>Pemilihan Jurusan Kuliah dengan Metode SMART<br>
+            <em>Simple Multi-Attribute Rating Technique</em></p>
+        </div>
+
+        <!-- Langkah 1: Penjelasan Kriteria -->
+        <div class="card">
+            <h2>📋 Kriteria Penilaian</h2>
+            <div class="criteria-explanation">
+                <div class="criteria-item">
+                    <h4>🎯 Minat dan Bakat Personal</h4>
+                    <p>Kesesuaian jurusan dengan minat pribadi, kemampuan, dan passion yang dimiliki</p>
+                </div>
+                <div class="criteria-item">
+                    <h4>💼 Prospek Karir dan Lapangan Kerja</h4>
+                    <p>Peluang kerja di masa depan, permintaan profesi, dan stabilitas karir jangka panjang</p>
+                </div>
+                <div class="criteria-item">
+                    <h4>💰 Kemampuan Finansial</h4>
+                    <p>Biaya kuliah, biaya hidup, kemampuan ekonomi keluarga, dan return on investment</p>
+                </div>
+                <div class="criteria-item">
+                    <h4>🏆 Prestise dan Akreditasi</h4>
+                    <p>Akreditasi program studi, reputasi universitas, dan pengakuan program</p>
+                </div>
+                <div class="criteria-item">
+                    <h4>📚 Tingkat Kesulitan Akademik</h4>
+                    <p>Kompleksitas materi, tingkat kompetisi masuk, dan beban studi</p>
+                </div>
+                <div class="criteria-item">
+                    <h4>🏫 Lingkungan dan Fasilitas</h4>
+                    <p>Kualitas fasilitas pembelajaran, lokasi kampus, dan lingkungan akademik</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Langkah 2: Pengaturan Bobot -->
+        <div class="card">
+            <h2>⚖️ Pengaturan Bobot Kriteria</h2>
+            <p style="margin-bottom: 20px; color: #666;">Sesuaikan bobot setiap kriteria sesuai dengan prioritas personal Anda (Total harus = 100%)</p>
+            
+            <div class="form-section">
+                <div>
+                    <div class="input-group">
+                        <label for="weight1">Minat dan Bakat Personal</label>
+                        <input type="range" id="weight1" class="weight-slider" min="5" max="50" value="25" oninput="updateWeight(1, this.value)">
+                        <span class="weight-display" id="weight1-display">25%</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="weight2">Prospek Karir dan Lapangan Kerja</label>
+                        <input type="range" id="weight2" class="weight-slider" min="5" max="50" value="25" oninput="updateWeight(2, this.value)">
+                        <span class="weight-display" id="weight2-display">25%</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="weight3">Kemampuan Finansial</label>
+                        <input type="range" id="weight3" class="weight-slider" min="5" max="50" value="20" oninput="updateWeight(3, this.value)">
+                        <span class="weight-display" id="weight3-display">20%</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-group">
+                        <label for="weight4">Prestise dan Akreditasi</label>
+                        <input type="range" id="weight4" class="weight-slider" min="5" max="50" value="15" oninput="updateWeight(4, this.value)">
+                        <span class="weight-display" id="weight4-display">15%</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="weight5">Tingkat Kesulitan Akademik</label>
+                        <input type="range" id="weight5" class="weight-slider" min="5" max="50" value="10" oninput="updateWeight(5, this.value)">
+                        <span class="weight-display" id="weight5-display">10%</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="weight6">Lingkungan dan Fasilitas</label>
+                        <input type="range" id="weight6" class="weight-slider" min="5" max="50" value="5" oninput="updateWeight(6, this.value)">
+                        <span class="weight-display" id="weight6-display">5%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="total-weight" id="total-weight">Total Bobot: 100%</div>
+            <div id="weight-alert" class="alert alert-warning hidden">
+                ⚠️ Total bobot harus sama dengan 100%!
+            </div>
+        </div>
+
+        <!-- Langkah 3: Input Alternatif Jurusan -->
+        <div class="card">
+            <h2>📝 Input Alternatif Jurusan</h2>
+            <div class="form-section">
+                <div>
+                    <div class="input-group">
+                        <label for="jurusan1">Alternatif Jurusan 1</label>
+                        <input type="text" id="jurusan1" placeholder="Contoh: Teknik Informatika">
+                    </div>
+                    <div class="input-group">
+                        <label for="jurusan2">Alternatif Jurusan 2</label>
+                        <input type="text" id="jurusan2" placeholder="Contoh: Manajemen Bisnis">
+                    </div>
+                    <div class="input-group">
+                        <label for="jurusan3">Alternatif Jurusan 3</label>
+                        <input type="text" id="jurusan3" placeholder="Contoh: Kedokteran">
+                    </div>
+                </div>
+                <div>
+                    <div class="input-group">
+                        <label for="jurusan4">Alternatif Jurusan 4 (Opsional)</label>
+                        <input type="text" id="jurusan4" placeholder="Masukkan jurusan keempat">
+                    </div>
+                    <div class="input-group">
+                        <label for="jurusan5">Alternatif Jurusan 5 (Opsional)</label>
+                        <input type="text" id="jurusan5" placeholder="Masukkan jurusan kelima">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="generateRatingTable()">🔄 Generate Tabel Penilaian</button>
+        </div>
+
+        <!-- Langkah 4: Tabel Penilaian -->
+        <div class="card hidden" id="rating-card">
+            <h2>⭐ Penilaian Alternatif Jurusan</h2>
+            <p style="margin-bottom: 20px; color: #666;">Berikan rating 1-5 untuk setiap kombinasi jurusan dan kriteria:<br>
+            <strong>5 = Sangat Baik</strong> | <strong>4 = Baik</strong> | <strong>3 = Cukup</strong> | <strong>2 = Kurang</strong> | <strong>1 = Sangat Kurang</strong></p>
+            
+            <div class="rating-section">
+                <table class="rating-table" id="rating-table">
+                    <!-- Tabel akan di-generate oleh JavaScript -->
+                </table>
+            </div>
+            
+            <button class="btn" onclick="calculateSMART()">🧮 Hitung Hasil SMART</button>
+            <button class="btn btn-secondary" onclick="resetForm()">🔄 Reset Form</button>
+        </div>
+
+        <!-- Hasil Perhitungan -->
+        <div class="card hidden" id="results-card">
+            <h2>🏆 Hasil Perhitungan Metode SMART</h2>
+            <div class="results" id="results">
+                <!-- Hasil akan ditampilkan di sini -->
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 12px;">
+                <h3 style="color: #333; margin-bottom: 15px;">📊 Interpretasi Hasil:</h3>
+                <p style="color: #666; line-height: 1.6;">
+                    Jurusan dengan nilai tertinggi adalah yang paling sesuai berdasarkan kriteria dan bobot yang Anda tentukan. 
+                    Nilai berkisar dari 1.00 (terburuk) hingga 5.00 (terbaik). Pertimbangkan juga faktor subjektif lainnya 
+                    sebelum membuat keputusan final.
+                </p>
+            </div>
+
+            <button class="btn" onclick="printResults()">🖨️ Cetak Hasil</button>
+            <button class="btn btn-secondary" onclick="startOver()">🔄 Mulai Ulang</button>
+        </div>
+    </div>
+
+    <script>
+        let weights = [25, 25, 20, 15, 10, 5];
+        let alternatives = [];
+        let ratings = {};
+
+        function updateWeight(index, value) {
+            weights[index-1] = parseInt(value);
+            document.getElementById(`weight${index}-display`).textContent = value + '%';
+            
+            const total = weights.reduce((sum, w) => sum + w, 0);
+            document.getElementById('total-weight').textContent = `Total Bobot: ${total}%`;
+            
+            const alertElement = document.getElementById('weight-alert');
+            if (total !== 100) {
+                alertElement.classList.remove('hidden');
+                alertElement.textContent = `⚠️ Total bobot saat ini ${total}%. Sesuaikan agar total = 100%`;
+            } else {
+                alertElement.classList.add('hidden');
+            }
+        }
+
+        function generateRatingTable() {
+            alternatives = [];
+            for (let i = 1; i <= 5; i++) {
+                const jurusan = document.getElementById(`jurusan${i}`).value.trim();
+                if (jurusan) {
+                    alternatives.push(jurusan);
+                }
+            }
+
+            if (alternatives.length < 2) {
+                alert('Masukkan minimal 2 alternatif jurusan!');
+                return;
+            }
+
+            const total = weights.reduce((sum, w) => sum + w, 0);
+            if (total !== 100) {
+                alert('Total bobot harus sama dengan 100%!');
+                return;
+            }
+
+            const criteriaNames = [
+                'Minat & Bakat',
+                'Prospek Karir',
+                'Kemampuan Finansial',
+                'Prestise & Akreditasi',
+                'Tingkat Kesulitan',
+                'Lingkungan & Fasilitas'
+            ];
+
+            let tableHTML = '<thead><tr><th>Alternatif Jurusan</th>';
+            criteriaNames.forEach((criteria, index) => {
+                tableHTML += `<th>${criteria}<br><small>(${weights[index]}%)</small></th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            alternatives.forEach((alt, altIndex) => {
+                tableHTML += `<tr><td style="text-align: left; font-weight: 600;">${alt}</td>`;
+                criteriaNames.forEach((criteria, critIndex) => {
+                    const inputId = `rating-${altIndex}-${critIndex}`;
+                    tableHTML += `<td><input type="number" class="rating-input" id="${inputId}" min="1" max="5" value="3"></td>`;
+                });
+                tableHTML += '</tr>';
+            });
+
+            tableHTML += '</tbody>';
+            document.getElementById('rating-table').innerHTML = tableHTML;
+            document.getElementById('rating-card').classList.remove('hidden');
+            
+            // Scroll to rating section
+            document.getElementById('rating-card').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calculateSMART() {
+            // Collect ratings
+            ratings = {};
+            let hasEmptyRating = false;
+
+            alternatives.forEach((alt, altIndex) => {
+                ratings[alt] = [];
+                for (let critIndex = 0; critIndex < 6; critIndex++) {
+                    const inputId = `rating-${altIndex}-${critIndex}`;
+                    const value = parseInt(document.getElementById(inputId).value);
+                    if (isNaN(value) || value < 1 || value > 5) {
+                        hasEmptyRating = true;
+                        return;
+                    }
+                    ratings[alt].push(value);
+                }
+            });
+
+            if (hasEmptyRating) {
+                alert('Semua rating harus diisi dengan nilai 1-5!');
+                return;
+            }
+
+            // Calculate SMART scores
+            const results = [];
+            alternatives.forEach(alt => {
+                let totalScore = 0;
+                ratings[alt].forEach((rating, index) => {
+                    totalScore += (rating * weights[index]) / 100;
+                });
+                results.push({
+                    name: alt,
+                    score: totalScore.toFixed(2)
+                });
+            });
+
+            // Sort by score (descending)
+            results.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+
+            // Display results
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            let resultsHTML = '';
+            results.forEach((result, index) => {
+                const rank = index + 1;
+                const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '🏅';
+                resultsHTML += `
+                    <div class="result-item">
+                        <div class="result-rank">${medal} ${rank}</div>
+                        <div class="result-name">${result.name}</div>
+                        <div class="result-score">${result.score}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results-card').classList.remove('hidden');
+            
+            // Scroll to results
+            document.getElementById('results-card').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function printResults() {
+            const resultsContent = document.getElementById('results-card').innerHTML;
+            const weightsInfo = weights.map((w, i) => {
+                const criteriaNames = ['Minat & Bakat', 'Prospek Karir', 'Kemampuan Finansial', 'Prestise & Akreditasi', 'Tingkat Kesulitan', 'Lingkungan & Fasilitas'];
+                return `${criteriaNames[i]}: ${w}%`;
+            }).join(' | ');
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Hasil Analisis Pemilihan Jurusan - Metode SMART</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .result-item { 
+                            display: flex; 
+                            justify-content: space-between; 
+                            padding: 15px; 
+                            border: 1px solid #ddd; 
+                            margin-bottom: 10px; 
+                            border-radius: 8px;
+                        }
+                        .weights { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Hasil Analisis Pemilihan Jurusan Kuliah</h1>
+                        <p>Metode SMART (Simple Multi-Attribute Rating Technique)</p>
+                        <p>Tanggal: ${new Date().toLocaleDateString('id-ID')}</p>
+                    </div>
+                    <div class="weights">
+                        <h3>Bobot Kriteria yang Digunakan:</h3>
+                        <p>${weightsInfo}</p>
+                    </div>
+                    ${resultsContent.replace(/<button[^>]*>.*?<\/button>/g, '')}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function resetForm() {
+            // Reset alternatives
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`jurusan${i}`).value = '';
+            }
+            
+            // Hide rating and results cards
+            document.getElementById('rating-card').classList.add('hidden');
+            document.getElementById('results-card').classList.add('hidden');
+            
+            // Clear data
+            alternatives = [];
+            ratings = {};
+        }
+
+        function startOver() {
+            // Reset everything
+            resetForm();
+            
+            // Reset weights to default
+            weights = [25, 25, 20, 15, 10, 5];
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`weight${i}`).value = weights[i-1];
+                document.getElementById(`weight${i}-display`).textContent = weights[i-1] + '%';
+            }
+            
+            document.getElementById('total-weight').textContent = 'Total Bobot: 100%';
+            document.getElementById('weight-alert').classList.add('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial weight displays
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`weight${i}-display`).textContent = weights[i-1] + '%';
+            }
+        });
+    </script>
+</body>
+</html>
